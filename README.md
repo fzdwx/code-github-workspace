@@ -1,2 +1,2 @@
 # code-github-workspace
-Github worksapce is an interactive github cli program
+Github workspace is an interactive github cli program
