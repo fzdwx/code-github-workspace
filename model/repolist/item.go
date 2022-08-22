@@ -27,10 +27,12 @@ func NewItem(repo *github.Repository, focusedBorderStyle lipgloss.Style, blurred
 }
 
 func (i Item) view(width int) string {
-	cell := width / 10
-	return fmt.Sprintf("%s %s",
-		padding(cell*2, mapstrp(i.repo.FullName)),
-		padding(cell*4, mapstrp(i.repo.Description)),
+	cell := width / 20
+	return fmt.Sprintf("%s%s%s%s",
+		padding(cell*5, mapstrp(i.repo.FullName)),
+		padding(cell*7, mapstrp(i.repo.Description)),
+		padding(cell, str.Empty),
+		padding(cell*2, fmt.Sprintf("🌟 %d", mapintp(i.repo.StargazersCount))),
 	)
 }
 
@@ -84,7 +86,7 @@ func limit(size int, s string) *str.FluentStringBuilder {
 	f := str.NewFluent()
 	rwrw := 0
 	for i, w := 0, 0; i < len(bytes); i += w {
-		if rwrw > size-3 {
+		if rwrw >= size-3 {
 			break
 		}
 
