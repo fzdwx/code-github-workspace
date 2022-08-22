@@ -12,48 +12,59 @@ import (
 
 type (
 	Item struct {
-		repo               *github.Repository
-		focusedBorderStyle lipgloss.Style
-		blurredBorderStyle lipgloss.Style
+		repo *github.Repository
 	}
 
 	Items struct {
-		items []*Item
-		resp  *github.Response
+		currentIdx int
+		items      []*Item
+		resp       *github.Response
 	}
 )
 
-func NewItem(repo *github.Repository, focusedBorderStyle lipgloss.Style, blurredBorderStyle lipgloss.Style) *Item {
-	return &Item{repo: repo, focusedBorderStyle: focusedBorderStyle, blurredBorderStyle: blurredBorderStyle}
+func NewItem(repo *github.Repository) *Item {
+	return &Item{repo: repo}
 }
 
-func (i Item) view(width int) string {
+func (i Item) view(width int, repoNameStyle lipgloss.Style, itemStyle lipgloss.Style) string {
 	cell := width / 20
-	return fmt.Sprintf("%s%s  %s",
-		padding(cell*5, i.repo.GetFullName()),
+
+	item := fmt.Sprintf("%s%s%s%s%s",
+		repoNameStyle.Render(padding(cell*5, i.repo.GetFullName())),
 		padding(cell*10, i.repo.GetDescription()),
-		padding(cell*2, fmt.Sprintf("🌟 %d", i.repo.GetStargazersCount())),
+		padding(cell*3, fmt.Sprintf(" 🌟 %d", i.repo.GetStargazersCount())),
+		padding(cell*2, fmt.Sprintf("%s", i.repo.GetVisibility())),
+		padding(cell*2, fmt.Sprintf(" 🎯 %d", i.repo.GetOpenIssues())),
 	)
+	return itemStyle.Render(item)
 }
 
 func (i Items) view(width int) string {
 	fluent := str.NewFluent()
-	for _, item := range i.items {
-		fluent.Str(item.view(width)).NewLine()
+	var focusedStyle = lipgloss.NewStyle().Background(lipgloss.Color("13"))
+	var blurredStyle = lipgloss.NewStyle()
+	var repoNameStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("8")).Bold(true)
+
+	for idx, item := range i.items {
+		var itemStyle = blurredStyle
+
+		if idx == i.currentIdx {
+			itemStyle = focusedStyle
+		}
+
+		fluent.Str(item.view(width, repoNameStyle, itemStyle)).NewLine()
 	}
 	return lipgloss.JoinVertical(lipgloss.Top, fluent.String())
 }
 
 func NewItems(repos []*github.Repository, resp *github.Response) *Items {
 	var items []*Item
-	focusedBorderStyle := lipgloss.NewStyle().Background(lipgloss.Color("12"))
-	blurredBorderStyle := lipgloss.NewStyle().Border(lipgloss.HiddenBorder())
 
 	for _, repo := range repos {
-		items = append(items, NewItem(repo, focusedBorderStyle, blurredBorderStyle))
+		items = append(items, NewItem(repo))
 	}
 
-	return &Items{items: items, resp: resp}
+	return &Items{items: items, resp: resp, currentIdx: 0}
 }
 
 func padding(size int, s string) string {
