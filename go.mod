@@ -6,9 +6,10 @@ require (
 	github.com/charmbracelet/bubbles v0.13.0
 	github.com/charmbracelet/bubbletea v0.22.1
 	github.com/charmbracelet/lipgloss v0.5.0
-	github.com/fzdwx/x/log v0.0.0-20220822022913-a2ce4a96ba9e
-	github.com/fzdwx/x/str v0.0.0-20220822022913-a2ce4a96ba9e
+	github.com/fzdwx/x/log v0.0.0-20220822064707-eba1fe2a6249
+	github.com/fzdwx/x/str v0.0.0-20220822064707-eba1fe2a6249
 	github.com/google/go-github/v46 v46.0.0
+	github.com/mattn/go-runewidth v0.0.13
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	golang.org/x/oauth2 v0.0.0-20220808172628-8227340efae7
@@ -26,7 +27,6 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/ansi v0.0.0-20211031195517-c9f0611b6c70 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect

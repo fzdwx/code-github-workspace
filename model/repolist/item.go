@@ -6,6 +6,7 @@ import (
 	"github.com/fzdwx/x/str"
 	"github.com/google/go-github/v46/github"
 	"github.com/mattn/go-runewidth"
+	"strings"
 	"unicode/utf8"
 )
 
@@ -28,11 +29,10 @@ func NewItem(repo *github.Repository, focusedBorderStyle lipgloss.Style, blurred
 
 func (i Item) view(width int) string {
 	cell := width / 20
-	return fmt.Sprintf("%s%s%s%s",
-		padding(cell*5, mapstrp(i.repo.FullName)),
-		padding(cell*7, mapstrp(i.repo.Description)),
-		padding(cell, str.Empty),
-		padding(cell*2, fmt.Sprintf("🌟 %d", mapintp(i.repo.StargazersCount))),
+	return fmt.Sprintf("%s%s  %s",
+		padding(cell*5, i.repo.GetFullName()),
+		padding(cell*10, i.repo.GetDescription()),
+		padding(cell*2, fmt.Sprintf("🌟 %d", i.repo.GetStargazersCount())),
 	)
 }
 
@@ -54,21 +54,6 @@ func NewItems(repos []*github.Repository, resp *github.Response) *Items {
 	}
 
 	return &Items{items: items, resp: resp}
-}
-
-func mapintp(count *int) int {
-	if count == nil {
-		return 0
-	}
-
-	return *count
-}
-
-func mapstrp(s *string) string {
-	if s == nil {
-		return str.Empty
-	}
-	return *s
 }
 
 func padding(size int, s string) string {
@@ -100,5 +85,5 @@ func limit(size int, s string) *str.FluentStringBuilder {
 		w = rw
 	}
 
-	return f.Str("...")
+	return f.Str(strings.Repeat(".", size-rwrw))
 }

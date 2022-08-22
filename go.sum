@@ -71,10 +71,10 @@ github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7
 github.com/frankban/quicktest v1.14.3 h1:FJKSZTDHjyhriyC81FLQ0LY93eSai0ZyR/ZIkd3ZUKE=
 github.com/fsnotify/fsnotify v1.5.4 h1:jRbGcIw6P2Meqdwuo0H1p6JVLbL5DHKAKlYndzMwVZI=
 github.com/fsnotify/fsnotify v1.5.4/go.mod h1:OVB6XrOHzAwXMpEM7uPOzcehqUV2UqJxmVXmkdnm1bU=
-github.com/fzdwx/x/log v0.0.0-20220822022913-a2ce4a96ba9e h1:PZyT/BVF6W39ykVXp4kInM5q/u6U7kwNx9q8HZnvU4o=
-github.com/fzdwx/x/log v0.0.0-20220822022913-a2ce4a96ba9e/go.mod h1:F1yQKWXSXGqeGUSML93CJx6djJ157wCUm9UwfGptIO4=
-github.com/fzdwx/x/str v0.0.0-20220822022913-a2ce4a96ba9e h1:OQlUzA325Q2rUfB+XPOrehhZK/Y15E83mdEch/y32RI=
-github.com/fzdwx/x/str v0.0.0-20220822022913-a2ce4a96ba9e/go.mod h1:E3t1cuIApcXjQaD+D/e0owDNTJO8YSlucjtaXuaJr5U=
+github.com/fzdwx/x/log v0.0.0-20220822064707-eba1fe2a6249 h1:cdyYEBdJ304FFeUnWJtZsmRUtnvOObCe51v7kMgjnQg=
+github.com/fzdwx/x/log v0.0.0-20220822064707-eba1fe2a6249/go.mod h1:F1yQKWXSXGqeGUSML93CJx6djJ157wCUm9UwfGptIO4=
+github.com/fzdwx/x/str v0.0.0-20220822064707-eba1fe2a6249 h1:rRWkzkgGl0nFHbUdjVV4sElX7tGtQPp2N1Dn1UfFbso=
+github.com/fzdwx/x/str v0.0.0-20220822064707-eba1fe2a6249/go.mod h1:E3t1cuIApcXjQaD+D/e0owDNTJO8YSlucjtaXuaJr5U=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
