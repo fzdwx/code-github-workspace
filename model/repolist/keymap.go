@@ -1,4 +1,4 @@
-package list
+package repolist
 
 import (
 	"github.com/charmbracelet/bubbles/key"
