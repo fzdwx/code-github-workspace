@@ -1,6 +1,6 @@
 package main
 
-import "github.com/fzdwx/code-github-workspace/cmd"
+import "github.com/fzdwx/gh-sp/cmd"
 
 func main() {
 	cmd.Execute()

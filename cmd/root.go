@@ -2,15 +2,14 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/fzdwx/code-github-workspace/config"
 	"github.com/fzdwx/x/log"
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var debug bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -39,7 +38,8 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.code-github-workspace.yaml)")
+	//rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.code-github-workspace.yaml)")
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "use debug log level")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -49,35 +49,35 @@ func init() {
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
-
-		cobra.CheckErr(err)
-
-		// Search config in home directory with name ".code-github-workspace" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".code-github-workspace")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
-	}
-
-	var cfg config.Config
-	if err := viper.Unmarshal(&cfg); err != nil {
-		panic(err)
-	}
-
-	config.Init(cfg)
-	log.InitLog(cfg.Debug, fmt.Sprintf("%s%s%s", os.TempDir(), string(os.PathSeparator), ".code-github-workspace.log"))
-
-	log.Debug().Str("config file", viper.ConfigFileUsed()).Msg("load config success")
+	log.InitLog(debug, fmt.Sprintf("%s%s%s", os.TempDir(), string(os.PathSeparator), ".code-github-workspace.log"))
+	//if cfgFile != "" {
+	//	// Use config file from the flag.
+	//	viper.SetConfigFile(cfgFile)
+	//} else {
+	//	// Find home directory.
+	//	home, err := os.UserHomeDir()
+	//
+	//	cobra.CheckErr(err)
+	//
+	//	// Search config in home directory with name ".code-github-workspace" (without extension).
+	//	viper.AddConfigPath(home)
+	//	viper.SetConfigType("yaml")
+	//	viper.SetConfigName(".code-github-workspace")
+	//}
+	//
+	//viper.AutomaticEnv() // read in environment variables that match
+	//
+	//// If a config file is found, read it in.
+	//if err := viper.ReadInConfig(); err != nil {
+	//	panic(err)
+	//}
+	//
+	//var cfg config.Config
+	//if err := viper.Unmarshal(&cfg); err != nil {
+	//	panic(err)
+	//}
+	//
+	//config.Init(&cfg)
+	//
+	//log.Debug().Str("config file", viper.ConfigFileUsed()).Msg("load config success")
 }

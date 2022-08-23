@@ -3,6 +3,7 @@ package repolist
 import (
 	"fmt"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/fzdwx/gh-sp/model/table"
 	"github.com/fzdwx/x/str"
 	"github.com/google/go-github/v46/github"
 	"github.com/mattn/go-runewidth"
@@ -16,6 +17,7 @@ type (
 	}
 
 	Items struct {
+		table      *table.SingleType[string]
 		currentIdx int
 		items      []*Item
 		resp       *github.Response
@@ -31,16 +33,17 @@ func (i Item) view(width int, repoNameStyle lipgloss.Style, itemStyle lipgloss.S
 
 	item := fmt.Sprintf("%s%s%s%s%s",
 		repoNameStyle.Render(padding(cell*5, i.repo.GetFullName())),
-		padding(cell*10, i.repo.GetDescription()),
+		padding(cell*8, i.repo.GetDescription()),
 		padding(cell*3, fmt.Sprintf(" 🌟 %d", i.repo.GetStargazersCount())),
 		padding(cell*2, fmt.Sprintf("%s", i.repo.GetVisibility())),
 		padding(cell*2, fmt.Sprintf(" 🎯 %d", i.repo.GetOpenIssues())),
 	)
-	return itemStyle.Render(item)
+	return item
 }
 
-func (i Items) view(width int) string {
+func (i Items) View(width int, height int) string {
 	fluent := str.NewFluent()
+
 	var focusedStyle = lipgloss.NewStyle().Background(lipgloss.Color("13"))
 	var blurredStyle = lipgloss.NewStyle()
 	var repoNameStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("8")).Bold(true)

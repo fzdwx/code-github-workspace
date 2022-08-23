@@ -2,8 +2,7 @@ package cmd
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/fzdwx/code-github-workspace/config"
-	"github.com/fzdwx/code-github-workspace/model/repolist"
+	"github.com/fzdwx/gh-sp/model/repolist"
 	"github.com/google/go-github/v46/github"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +17,8 @@ var repoListCmd = &cobra.Command{
 			Direction:   "desc",
 			ListOptions: github.ListOptions{},
 		}
-		if err := tea.NewProgram(repolist.New(config.Get().User, ops), tea.WithAltScreen()).Start(); err != nil {
+
+		if err := tea.NewProgram(repolist.New(ops), tea.WithAltScreen()).Start(); err != nil {
 			panic(err)
 		}
 	},

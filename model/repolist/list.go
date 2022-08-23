@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/fzdwx/code-github-workspace/gh"
+	"github.com/fzdwx/gh-sp/api"
 	"github.com/google/go-github/v46/github"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +23,6 @@ type Model struct {
 	Width  int
 	Height int
 	ops    *github.RepositoryListOptions
-	user   string
 
 	spinner spinner.Model
 
@@ -33,7 +32,7 @@ type Model struct {
 	cancel context.CancelFunc
 }
 
-func New(user string, ops *github.RepositoryListOptions) *Model {
+func New(ops *github.RepositoryListOptions) *Model {
 	s := spinner.New()
 	s.Spinner = spinner.Dot
 	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
@@ -41,7 +40,6 @@ func New(user string, ops *github.RepositoryListOptions) *Model {
 		Keymap:  DefaultKeyMap(),
 		spinner: s,
 		ops:     ops,
-		user:    user,
 	}
 }
 
@@ -50,7 +48,7 @@ func (m *Model) Init() tea.Cmd {
 	go func() {
 		ctx, cancelFunc := context.WithCancel(context.Background())
 		m.cancel = cancelFunc
-		repos, resp, err := gh.GetAuth(ctx).Repositories.List(ctx, m.user, m.ops)
+		repos, resp, err := api.Get(ctx).Repositories.List(ctx, "", m.ops)
 
 		cobra.CheckErr(err)
 
@@ -87,7 +85,7 @@ func (m *Model) View() string {
 	}
 
 	//return lipgloss.JoinVertical(lipgloss.Right, blockB) + lipgloss.JoinHorizontal(lipgloss.Top, blockA)
-	return m.items.view(m.Width)
+	return m.items.View(m.Width, m.Height)
 }
 
 func (m *Model) spinnerView() string {
