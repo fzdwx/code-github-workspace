@@ -13,6 +13,7 @@ func init() {
 	host, _ := auth.DefaultHost()
 
 	token, _ = auth.TokenForHost(host)
+	Info().Str("token", token).Msg("init token")
 }
 
 func fetchUsername() string {
@@ -24,6 +25,10 @@ func fetchUsername() string {
 	cobra.CheckErr(err)
 
 	return response.Login
+}
+
+func Token() string {
+	return token
 }
 
 func Get(ctx context.Context) *github.Client {
