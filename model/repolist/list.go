@@ -34,16 +34,6 @@ type Model struct {
 	cancel context.CancelFunc
 }
 
-func headers() table.Headers {
-	return []*table.Header{
-		{Text: "repo name", Ratio: 5},
-		{Text: "description", Ratio: 12, MinWidth: 20},
-		{Text: "start", Ratio: 2, MinWidth: 5},
-		{Text: "\uF707", Ratio: 2, MinWidth: 7},
-		{Text: "issues", Ratio: 2, MinWidth: 10},
-	}
-}
-
 func New(ops *github.RepositoryListOptions) *Model {
 	s := spinner.New()
 	s.Spinner = spinner.Dot
@@ -116,4 +106,14 @@ func (m *Model) addRows(repos []*github.Repository) {
 		})
 	}
 	m.table.UpdateViewport()
+}
+
+func headers() table.Headers {
+	return []*table.Header{
+		{Text: "Repo Name", Ratio: 5},
+		{Text: "Description", Ratio: 12, MinWidth: 20},
+		{Text: "Stars", Ratio: 2, MinWidth: 5},
+		{Text: "Visible", Ratio: 2, MinWidth: 7},
+		{Text: "Issues", Ratio: 2, MinWidth: 10},
+	}
 }
