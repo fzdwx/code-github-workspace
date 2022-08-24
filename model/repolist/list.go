@@ -58,11 +58,12 @@ func (m *Model) Init() tea.Cmd {
 		m.addRows(repos)
 		m.status = loaded
 	}()
+	m.table.Focus()
 	return spinner.Tick
 }
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	var cmd tea.Cmd
+	var cmds []tea.Cmd
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
@@ -72,16 +73,22 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return m, tea.Quit
 		}
+
+		model, tCmd := m.table.Update(msg)
+		m.table = model
+		cmds = append(cmds, tCmd)
 	case tea.WindowSizeMsg:
 		m.Width = msg.Width
 		m.Height = msg.Height
 		m.table.SetWidth(m.Width)
 		m.table.SetHeight(m.Height)
 	case spinner.TickMsg:
-		m.spinner, cmd = m.spinner.Update(msg)
+		model, cmd := m.spinner.Update(msg)
+		m.spinner = model
+		cmds = append(cmds, cmd)
 	}
 
-	return m, cmd
+	return m, tea.Batch(cmds...)
 }
 
 func (m *Model) View() string {
