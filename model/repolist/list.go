@@ -51,6 +51,7 @@ func (m *Model) Init() tea.Cmd {
 	go func() {
 		ctx, cancelFunc := context.WithCancel(context.Background())
 		m.cancel = cancelFunc
+		api.Info().Str("token", api.Token()).Msg("get token")
 		repos, _, err := api.Get(ctx).Repositories.List(ctx, "", m.ops)
 
 		cobra.CheckErr(err)

@@ -7,8 +7,6 @@ require (
 	github.com/charmbracelet/bubbletea v0.22.1
 	github.com/charmbracelet/lipgloss v0.5.0
 	github.com/cli/go-gh v0.1.0
-	github.com/fzdwx/x/log v0.0.0-20220822064707-eba1fe2a6249
-	github.com/fzdwx/x/str v0.0.0-20220822064707-eba1fe2a6249
 	github.com/google/go-github/v46 v46.0.0
 	github.com/mattn/go-runewidth v0.0.13
 	github.com/spf13/cobra v1.5.0

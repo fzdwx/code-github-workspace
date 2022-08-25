@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"github.com/fzdwx/x/log"
+	"github.com/fzdwx/gh-sp/api"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -48,8 +47,9 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-
-	log.InitLog(debug, fmt.Sprintf("%s%s%s", os.TempDir(), string(os.PathSeparator), ".code-github-workspace.log"))
+	f, err := os.OpenFile("code.log", os.O_RDWR|os.O_CREATE, 0777)
+	cobra.CheckErr(err)
+	api.InitLog(debug, f)
 	//if cfgFile != "" {
 	//	// Use config file from the flag.
 	//	viper.SetConfigFile(cfgFile)
