@@ -9,6 +9,12 @@ table:
 un:
   cd  .example/unicode/ && go run .
 
+cr:
+   cd  .example/color/ && go run .
+
+rpl:
+  go run . repo list
+
 list:
   @just run list
 

@@ -31,13 +31,8 @@ func NewModel(headers Headers) *Model {
 	m.SetHeaders(headers)
 	m.SetWidth(100)
 	m.SetHeight(10)
-
+	m.UpdateViewport()
 	return m
-}
-
-// AppendRow remember to call UpdateViewport
-func (m *Model) AppendRow(row Row) {
-	m.rows = append(m.rows, row)
 }
 
 // Update is the Bubble Tea update loop.
@@ -90,6 +85,28 @@ func (m *Model) UpdateViewport() {
 	m.viewport.SetContent(
 		lipgloss.JoinVertical(lipgloss.Left, renderedRows...),
 	)
+}
+
+// AppendRow remember to call UpdateViewport
+func (m *Model) AppendRow(row Row) {
+	m.rows = append(m.rows, row)
+}
+
+//SetHeaders remember to call UpdateViewport
+func (m *Model) SetHeaders(headers Headers) {
+	m.headers = headers
+	m.totalRatio = headers.TotalRatio()
+}
+
+//SetWidth remember to call UpdateViewport
+func (m *Model) SetWidth(width int) {
+	m.viewport.Width = width
+	m.refreshHeaderMaxWidth(width)
+}
+
+//SetHeight remember to call UpdateViewport
+func (m *Model) SetHeight(height int) {
+	m.viewport.Height = height - 1
 }
 
 // Cursor returns the index of the selected row.
@@ -179,23 +196,6 @@ func (m *Model) renderRow(rowID int) string {
 	}
 
 	return row
-}
-
-func (m *Model) SetHeaders(headers Headers) {
-	m.headers = headers
-	m.totalRatio = headers.TotalRatio()
-	m.UpdateViewport()
-}
-
-func (m *Model) SetWidth(width int) {
-	m.viewport.Width = width
-	m.refreshHeaderMaxWidth(width)
-	m.UpdateViewport()
-}
-
-func (m *Model) SetHeight(height int) {
-	m.viewport.Height = height - 1
-	m.UpdateViewport()
 }
 
 func (m *Model) refreshHeaderMaxWidth(width int) {

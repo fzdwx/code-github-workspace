@@ -50,6 +50,7 @@ func initConfig() {
 	f, err := os.OpenFile("code.log", os.O_RDWR|os.O_CREATE, 0777)
 	cobra.CheckErr(err)
 	api.InitLog(debug, f)
+	api.InitBrowser(f)
 	//if cfgFile != "" {
 	//	// Use config file from the flag.
 	//	viper.SetConfigFile(cfgFile)
