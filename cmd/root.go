@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"github.com/fzdwx/gh-sp/api"
+	"github.com/fzdwx/gh-sp/cmd/repo"
+	"github.com/fzdwx/gh-sp/cmd/search"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -31,6 +33,9 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.AddCommand(search.New())
+	rootCmd.AddCommand(repo.New())
+
 	cobra.OnInitialize(initConfig)
 
 	// Here you will define your flags and configuration settings.

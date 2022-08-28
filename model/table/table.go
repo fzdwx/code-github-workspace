@@ -92,19 +92,19 @@ func (m *Model) AppendRow(row Row) {
 	m.rows = append(m.rows, row)
 }
 
-//SetHeaders remember to call UpdateViewport
+// SetHeaders remember to call UpdateViewport
 func (m *Model) SetHeaders(headers Headers) {
 	m.headers = headers
 	m.totalRatio = headers.TotalRatio()
 }
 
-//SetWidth remember to call UpdateViewport
+// SetWidth remember to call UpdateViewport
 func (m *Model) SetWidth(width int) {
 	m.viewport.Width = width
 	m.refreshHeaderMaxWidth(width)
 }
 
-//SetHeight remember to call UpdateViewport
+// SetHeight remember to call UpdateViewport
 func (m *Model) SetHeight(height int) {
 	m.viewport.Height = height - 1
 }
