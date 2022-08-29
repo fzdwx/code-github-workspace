@@ -58,11 +58,9 @@ func New(ops *github.RepositoryListOptions) *Model {
 
 func (m *Model) Init() tea.Cmd {
 	m.status = loading
-	m.table.Focus()
-
 	go m.fetchRepoList(m.Ops)
 
-	return spinner.Tick
+	return tea.Batch(m.table.Focus(), spinner.Tick)
 }
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -84,9 +82,6 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.err = err
 			return m, nil
 		}
-		model, tCmd := m.table.Update(msg)
-		m.table = model
-		cmds = append(cmds, tCmd)
 	case tea.WindowSizeMsg:
 		if msg.Height < noticeHeight+2 {
 			m.status = heightNotEnough
@@ -100,6 +95,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.spinner = model
 		cmds = append(cmds, cmd)
 	}
+
+	model, tCmd := m.table.Update(msg)
+	m.table = model
+	cmds = append(cmds, tCmd)
 
 	return m, tea.Batch(cmds...)
 }
@@ -135,8 +134,9 @@ func (m *Model) centerStyle() lipgloss.Style {
 }
 
 func (m *Model) addRows(repos []*github.Repository) {
+	var rows []table.Row
 	for _, repo := range repos {
-		m.table.AppendRow(table.Row{
+		rows = append(rows, table.Row{
 			repo.GetFullName(),
 			repo.GetDescription(),
 			fmt.Sprintf("🌟 %d", repo.GetStargazersCount()),
@@ -144,6 +144,7 @@ func (m *Model) addRows(repos []*github.Repository) {
 			fmt.Sprintf("🎯 %d", repo.GetOpenIssuesCount()),
 		})
 	}
+	m.table.SetRows(rows)
 	m.table.UpdateViewport()
 }
 

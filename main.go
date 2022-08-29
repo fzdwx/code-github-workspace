@@ -26,11 +26,11 @@ func main() {
 //
 //	m := table.NewModel(headers)
 //
-//	m.AppendRow([]string{"fzdwx/x", "golang pkg", "🌟 0", "public", "🎯 0"})
-//	m.AppendRow([]string{"fzdwx/goshelldemo", "go shell demo", "🌟 0", "private", "🎯 0"})
-//	m.AppendRow([]string{"fzdwx/burst ", ":technologist: 内网穿透 (Proxy intranet to in", "🌟 46", "public ", "🎯 8"})
-//	m.AppendRow([]string{"index/worker", "the tauri showsace with vue3", "🌟 0", "public  ", "🎯 0"})
-//	m.AppendRow([]string{"fzdwx/sky   ", "⚡ 快速基于Netty创建出你自己的服务（HTTP，Web", "🌟 5", "public", "🎯 5"})
+//	m.SetRows([]string{"fzdwx/x", "golang pkg", "🌟 0", "public", "🎯 0"})
+//	m.SetRows([]string{"fzdwx/goshelldemo", "go shell demo", "🌟 0", "private", "🎯 0"})
+//	m.SetRows([]string{"fzdwx/burst ", ":technologist: 内网穿透 (Proxy intranet to in", "🌟 46", "public ", "🎯 8"})
+//	m.SetRows([]string{"index/worker", "the tauri showsace with vue3", "🌟 0", "public  ", "🎯 0"})
+//	m.SetRows([]string{"fzdwx/sky   ", "⚡ 快速基于Netty创建出你自己的服务（HTTP，Web", "🌟 5", "public", "🎯 5"})
 //
 //	fmt.Println(m.View())
 //}

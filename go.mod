@@ -11,16 +11,20 @@ require (
 	github.com/google/go-github/v46 v46.0.0
 	github.com/mattn/go-isatty v0.0.16
 	github.com/mattn/go-runewidth v0.0.13
-	github.com/rs/zerolog v1.27.0
+	github.com/rs/zerolog v1.28.0
+	github.com/sahilm/fuzzy v0.1.0
 	github.com/spf13/cobra v1.5.0
 	golang.org/x/oauth2 v0.0.0-20220822191816-0ebed06d0094
 )
 
 require (
+	github.com/MakeNowJust/heredoc v1.0.0 // indirect
+	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/cli/browser v1.1.0 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/cli/shurcooL-graphql v0.0.1 // indirect
 	github.com/containerd/console v1.0.3 // indirect
+	github.com/fzdwx/open v0.0.4-0.20220829064523-600004668573 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
@@ -45,5 +49,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

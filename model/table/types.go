@@ -4,6 +4,8 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/sahilm/fuzzy"
+	"sort"
 )
 
 type Header struct {
@@ -60,6 +62,7 @@ type KeyMap struct {
 	HalfPageDown key.Binding
 	GotoTop      key.Binding
 	GotoBottom   key.Binding
+	ShowFilter   key.Binding
 }
 
 // DefaultKeyMap returns a default set of keybindings.
@@ -67,36 +70,60 @@ func DefaultKeyMap() KeyMap {
 	const spacebar = " "
 	return KeyMap{
 		LineUp: key.NewBinding(
-			key.WithKeys("up", "k"),
-			key.WithHelp("↑/k", "up"),
+			key.WithKeys("up"),
+			key.WithHelp("↑", "up"),
 		),
 		LineDown: key.NewBinding(
-			key.WithKeys(tea.KeyDown.String(), "j"),
-			key.WithHelp("↓/j", "down"),
+			key.WithKeys(tea.KeyDown.String()),
+			key.WithHelp("↓", "down"),
 		),
 		PageUp: key.NewBinding(
-			key.WithKeys("b", "pgup"),
-			key.WithHelp("b/pgup", "page up"),
+			key.WithKeys("pgup"),
+			key.WithHelp("pgup", "page up"),
 		),
 		PageDown: key.NewBinding(
-			key.WithKeys("f", "pgdown", spacebar),
-			key.WithHelp("f/pgdn", "page down"),
+			key.WithKeys("pgdown", spacebar),
+			key.WithHelp("pgdn", "page down"),
 		),
 		HalfPageUp: key.NewBinding(
-			key.WithKeys("u", "ctrl+u"),
-			key.WithHelp("u", "½ page up"),
+			key.WithKeys("ctrl+u"),
+			key.WithHelp("^U", "½ page up"),
 		),
 		HalfPageDown: key.NewBinding(
-			key.WithKeys("d", "ctrl+d"),
-			key.WithHelp("d", "½ page down"),
+			key.WithKeys("ctrl+d"),
+			key.WithHelp("^D", "½ page down"),
 		),
 		GotoTop: key.NewBinding(
-			key.WithKeys("home", "g"),
-			key.WithHelp("g/home", "go to start"),
+			key.WithKeys("home"),
+			key.WithHelp("home", "go to start"),
 		),
 		GotoBottom: key.NewBinding(
-			key.WithKeys("end", "G"),
-			key.WithHelp("G/end", "go to end"),
+			key.WithKeys("end"),
+			key.WithHelp("end", "go to end"),
 		),
+		ShowFilter: key.NewBinding(
+			key.WithKeys("ctrl+f"),
+			key.WithHelp("^F", "show filter input"),
+		),
+	}
+}
+
+type Filter func(rows []Row, val string) ([]int, error)
+
+func DefaultFilter() Filter {
+	return func(rows []Row, val string) ([]int, error) {
+		var str []string
+		for _, row := range rows {
+			str = append(str, row[0])
+		}
+		matches := fuzzy.Find(val, str)
+		sort.Stable(matches)
+
+		var res []int
+		for _, match := range matches {
+			res = append(res, match.Index)
+		}
+
+		return res, nil
 	}
 }
